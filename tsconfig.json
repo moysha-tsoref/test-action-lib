@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "baseUrl": "./",
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "noLib": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "outDir": "lib",
+        "removeComments": false,
+        "rootDir": "./src",
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "strictFunctionTypes": false,
+        "strictNullChecks": false,
+        "strictPropertyInitialization": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "target": "es6"
+    },
+    "typeRoots": [
+        "node_modules/@types"
+    ],
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "lib",
+        "node_modules",
+        "./**/*spec.ts"
+    ]
+}
