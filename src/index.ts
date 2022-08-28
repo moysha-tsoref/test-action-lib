@@ -1,6 +1,5 @@
 import * as os from 'os';
 import * as readPkgUp from 'read-pkg-up';
-import * as requestIp from 'request-ip';
 
 const ifaces = os.networkInterfaces();
 const destinationAddress: string = ifaces.en0.find(_item => _item.family === 'IPv4' && _item.internal === false).address;
@@ -11,15 +10,16 @@ const destinationAddress: string = ifaces.en0.find(_item => _item.family === 'IP
 
 const configPromise = readPkgUp.sync();
 export async function notifyUserAction (arg: {
-    securityClient: any,
-    token: string,
-    action: string,
-    data: any,
-    request: any,
-    severity: number,
-    eventOutcome: boolean,
-    message: string,
-    endTime: number,
+    securityClient: any
+    token: string
+    action: string
+    data: any
+    severity: number
+    eventOutcome: boolean
+    message: string
+    endTime: number
+    sourceAddress: string
+    sourceHostName: string
     filename?: string
 }): Promise<void> {
 
@@ -37,9 +37,6 @@ export async function notifyUserAction (arg: {
         throw new Error('Please add property "version" in package.json');
     }
 
-    const sourceAddress = requestIp.getClientIp(arg.request);
-    const sourceHostName = arg.request.headers.host;
-
     return await arg.securityClient
         .send({ cmd: 'CREATE_USER_ACTION' }, {
             token: arg.token,
@@ -48,9 +45,9 @@ export async function notifyUserAction (arg: {
             deviceVendor,
             deviceProduct,
             deviceVersion,
-            sourceAddress,
+            sourceAddress: arg.sourceAddress,
             destinationAddress,
-            sourceHostName,
+            sourceHostName: arg.sourceHostName,
             eventOutcome: arg.eventOutcome === true ? 'success' : 'failure',
             message: arg.message,
             endTime: arg.endTime,
